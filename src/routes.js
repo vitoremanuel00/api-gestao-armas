@@ -15,20 +15,18 @@ const userController = new UserController();
 const armasemprestadas = new ArmaEmprestadaController();
 
 
+routes.post('/register', userController.register);
+routes.post('/login', userController.login);
+
 routes.post('/arma', authMiddleware, armaController.create);//para criar armas
 routes.get('/armas', authMiddleware, armaController.getAll);//para ver armas
 routes.delete('/arma/:id', authMiddleware, armaController.delete);//para deletar armas
 routes.put('/arma/:id', authMiddleware, armaController.update);//para editar armas
 
-
-routes.post('/register', userController.register);
-routes.post('/login', userController.login);
-
-
-routes.post('/emprestar', authMiddleware, armasemprestadas.post);
-routes.delete('/arma-devolucao', authMiddleware,armasemprestadas.devolverArma);
-routes.get('/listaremprestimos', authMiddleware,armasemprestadas.listarArmasEmprestadas);
-routes.put('/arma-emprestada/:numeroDeSerie', authMiddleware, armasemprestadas.atualizarArmaEmprestada);
+routes.post('/emprestar', authMiddleware, armasemprestadas.create);
+routes.delete('/arma-devolucao', authMiddleware,armasemprestadas.delete);
+routes.get('/listaremprestimos', authMiddleware,armasemprestadas.getAll);
+routes.put('/arma-emprestada/:numeroDeSerie', authMiddleware, armasemprestadas.update);
 
 
 

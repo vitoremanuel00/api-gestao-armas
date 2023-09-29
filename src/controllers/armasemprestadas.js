@@ -5,7 +5,7 @@ const { UserModel } = require('../models/user-model');
 const { Op } = require('sequelize');
 
 class ArmaEmprestadaController {
-    async post(request, response) {
+    async create(request, response) {
         const httpHelper = new HttpHelper(response);
 
         try {
@@ -56,7 +56,7 @@ class ArmaEmprestadaController {
 
 
 
-    async devolverArma(request, response) {
+    async delete(request, response) {
         const httpHelper = new HttpHelper(response);
 
 
@@ -81,7 +81,7 @@ class ArmaEmprestadaController {
     }
 
 
-    async listarArmasEmprestadas(request, response) {
+    async getAll(request, response) {
         const httpHelper = new HttpHelper(response);
 
         try {
@@ -109,7 +109,7 @@ class ArmaEmprestadaController {
     }
 
 
-    async atualizarArmaEmprestada(request, response) {
+    async update(request, response) {
         const httpHelper = new HttpHelper(response);
 
         try {
@@ -139,4 +139,4 @@ class ArmaEmprestadaController {
 
 }
 
-module.exports = { ArmaEmprestadaController };
+module.exports = { ArmaEmprestadaController };//
