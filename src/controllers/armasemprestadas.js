@@ -7,9 +7,14 @@ const { Op } = require('sequelize');
 class ArmaEmprestadaController {
     async create(request, response) {
         const httpHelper = new HttpHelper(response);
-
         try {
             const { numero_de_serie } = request.body;
+            if (!numero_de_serie) {
+                return response.status(400).json({ error: 'O campo numero_de_serie é obrigatório.' });
+            }
+            if (typeof numero_de_serie !== 'string' || numero_de_serie.trim() === '') {
+                return response.status(400).json({ error: 'O campo numero_de_serie deve ser uma string não vazia.' });
+            }
             const userId = request.user.id;
 
             // Verificando se o usuário já possui uma arma emprestada
@@ -50,7 +55,8 @@ class ArmaEmprestadaController {
 
             return httpHelper.ok({ message: 'Arma emprestada com sucesso.', emprestimo });
         } catch (error) {
-            return httpHelper.internalError(error);
+            console.error('Erro ao criar arma emprestada:', error);
+            return response.status(500).json({ error: 'Erro interno do servidor.' });
         }
     }
 
@@ -83,9 +89,7 @@ class ArmaEmprestadaController {
 
     async getAll(request, response) {
         const httpHelper = new HttpHelper(response);
-
         try {
-            // Consultando a tabela de armas emprestadas com detalhes do usuário e da arma
             const armasEmprestadas = await ArmaEmprestadaModel.findAll({
                 include: [
                     {
@@ -99,14 +103,17 @@ class ArmaEmprestadaController {
                         as: 'arma', // Renomeando o alias para 'arma'
                     },
                 ],
-                attributes: ['id', 'data_emprestimo', 'data_devolucao', 'status'],
-            });
-
+                attributes:['id', 'data_emprestimo', 'data_devolucao', 'status'],
+            })
             return httpHelper.ok({ armasEmprestadas });
-        } catch (error) {
+            }
+
+
+         catch (error) {
             return httpHelper.internalError(error);
         }
     }
+
 
 
     async update(request, response) {
