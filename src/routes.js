@@ -26,7 +26,7 @@ routes.put('/arma/:id', authMiddleware, armaController.update);//para editar arm
 routes.post('/emprestar', authMiddleware, armasemprestadas.create);
 routes.delete('/arma-devolucao', authMiddleware,armasemprestadas.delete);
 routes.get('/listaremprestimos', authMiddleware,armasemprestadas.getAll);
-routes.put('/arma-emprestada/:numerodeserie', authMiddleware, armasemprestadas.update);
+routes.put('/arma-emprestada/:numero_de_serie', authMiddleware, armasemprestadas.update);
 
 
 

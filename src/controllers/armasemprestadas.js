@@ -99,7 +99,7 @@ class ArmaEmprestadaController {
                     },
                     {
                         model: ArmaModel,
-                        attributes: ['numero_de_serie'],
+                        attributes: ['numero_de_serie', 'modelo', 'marca'],
                         as: 'arma', // Renomeando o alias para 'arma'
                     },
                 ],
