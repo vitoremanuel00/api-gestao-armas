@@ -103,7 +103,7 @@ class ArmaEmprestadaController {
                         as: 'arma', // Renomeando o alias para 'arma'
                     },
                 ],
-                attributes:['id', 'data_emprestimo', 'data_devolucao', 'status'],
+                attributes:['id', 'data_emprestimo', 'data_devolucao', 'status', 'observacoes'],
             })
             return httpHelper.ok({ armasEmprestadas });
             }
@@ -120,15 +120,22 @@ class ArmaEmprestadaController {
         const httpHelper = new HttpHelper(response);
 
         try {
-          const { numeroSerie } = request.params; // Obtém o número de série da arma a ser atualizada
+          const { numero_de_serie } = request.params; // Obtém o número de série da arma a ser atualizada
           const { status, observacoes } = request.body; // Dados a serem atualizados
 
           // Verifique se a arma emprestada com o número de série fornecido pertence ao usuário
           const userId = request.user.id;
           const armaEmprestada = await ArmaEmprestadaModel.findOne({
             where: { userId },
-            include: [{ model: ArmaModel, where: { numero_de_serie: numeroSerie } }],
+            include: [
+                {
+                    model: ArmaModel,
+                    as:'arma',
+                    where: { numero_de_serie: numero_de_serie }
+            }
+            ],
           });
+          console.log('Arma Emprestada:', armaEmprestada);
 
           if (!armaEmprestada) {
             return httpHelper.notFound('Arma emprestada não encontrada para o usuário.');
