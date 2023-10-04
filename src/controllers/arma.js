@@ -1,6 +1,10 @@
 const { HttpHelper } = require('../utils/http-helper');
 const { ArmaModel } = require('../models/arma-model');
 const { Validates } = require('../utils/validates');
+const { Sequelize } = require('sequelize');
+
+const configDatabase = require('../database/config');
+const sequelize = new Sequelize(configDatabase);
 
 class ArmaController {
     async create(request, response) {
@@ -91,6 +95,41 @@ class ArmaController {
             return httpHelper.internalError(error);
         }
     }
+
+
+    async ModelosdeArmas (request, response){
+        const httpHelper = new HttpHelper(response);
+        try{
+            const modelos = await ArmaModel.findAll({
+            attributes: [
+                'modelo',
+            [sequelize.fn('COUNT', sequelize.col('*')),'quantidadeArmas'],
+            ],
+            group: ['modelo'],
+        });
+            return httpHelper.ok(modelos);
+        } catch(error){
+            return httpHelper.internalError(error);
+        }
+
+      }
+
+    //   async batalhoesCR(request, response) {
+    //     const httpHelper = new HttpHelper(response);
+    //     try {
+    //         const batalhao_CR = await BatalhaoModel.findAll({
+    //             attributes: [
+    //             'comando_regional', // Substitua pelo nome correto do campo que identifica o Comando Regional
+    //             [sequelize.fn('COUNT', sequelize.col('*')), 'quantidadeBatalhoes'],
+    //             ],
+    //             group: ['comando_regional'], // Substitua pelo nome correto do campo que identifica o Comando Regional
+    //         });
+    //         return httpHelper.ok(batalhao_CR);
+    //     } catch (error) {
+    //         return httpHelper.internalError(error);
+    //     }
+    // }
+
 }
 
 module.exports = { ArmaController };
