@@ -45,7 +45,7 @@ class ArmaController {
         }
       }
 
-    async getAll(request, response) {
+    /*async getAll(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
             const armas = await ArmaModel.findAll();
@@ -53,7 +53,24 @@ class ArmaController {
         } catch (error) {
             return httpHelper.internalError(error);
         }
-    }
+    }*/
+    async getAll(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+          const { modelo } = request.query; // Recupere o parâmetro 'modelo' da consulta
+          let whereClause = {}; // Crie uma cláusula where inicial vazia
+
+          if (modelo) {
+            whereClause.modelo = modelo; // Se o modelo estiver definido na consulta, filtre pelo modelo
+          }
+
+          const armas = await ArmaModel.findAll({ where: whereClause });
+          return httpHelper.ok(armas);
+        } catch (error) {
+          return httpHelper.internalError(error);
+        }
+      }
+
 
     async delete(request, response) {
         const httpHelper = new HttpHelper(response);

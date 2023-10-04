@@ -34,6 +34,12 @@ class HttpHelper {
             error: `Erro interno: ${error}`
         });
     }
+
+    noContent(message) {
+        return this.response.status(204).json({
+            message: message
+        });
+    }
 }
 
 module.exports = { HttpHelper }

@@ -17,6 +17,9 @@ const armasemprestadas = new ArmaEmprestadaController();
 
 routes.post('/register', userController.register);
 routes.post('/login', userController.login);
+routes.get('/perfil/:id', authMiddleware, userController.getPerfil);
+routes.put('/perfil/:id', authMiddleware, userController.updatePerfil);
+routes.delete('/perfil', authMiddleware, userController.deletePerfil);
 
 routes.post('/arma', authMiddleware, armaController.create);//para criar armas
 routes.get('/armas', authMiddleware, armaController.getAll);//para ver armas
