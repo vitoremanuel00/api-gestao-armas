@@ -27,7 +27,8 @@ routes.get('/contagemModelos', authMiddleware,armaController.ModelosdeArmas);
 routes.post('/emprestar', authMiddleware, armasemprestadas.create);
 routes.delete('/arma-devolucao', authMiddleware,armasemprestadas.delete);
 routes.get('/listaremprestimos', authMiddleware,armasemprestadas.getAll);
-routes.put('/arma-emprestada/:numeroDeSerie', authMiddleware, armasemprestadas.update);
+routes.put('/arma-emprestada/:numero_de_serie', authMiddleware, armasemprestadas.update);
+
 
 
 

@@ -119,8 +119,8 @@ class ArmaEmprestadaController {
         const httpHelper = new HttpHelper(response);
 
         try {
-          const { numeroSerie } = request.params; // Obtém o número de série da arma a ser atualizada
-          const { status, observacoes } = request.body; // Dados a serem atualizados
+          const { numero_de_serie } = request.params; // Obtém o número de série da arma a ser atualizada
+          const { observacoes } = request.body; // Dados a serem atualizados
 
           // Verifique se a arma emprestada com o número de série fornecido pertence ao usuário
           const userId = request.user.id;
